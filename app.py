@@ -70,7 +70,7 @@ def load_model():
     
     return model, tokenizer, device
 
-def predict_bullying(text, model, tokenizer, device, threshold=0.7):
+def predict_bullying(text, model, tokenizer, device, threshold=0.6):
     
     inputs = tokenizer(
         text,
@@ -86,7 +86,7 @@ def predict_bullying(text, model, tokenizer, device, threshold=0.7):
 
     probabilities = torch.nn.functional.softmax(logits, dim=-1)[0]
 
-    # 🔥 Correct label mapping
+    # ✅ Correct label mapping
     labels = ["non-toxic", "toxic"]
 
     predicted_class = torch.argmax(probabilities).item()
@@ -95,17 +95,24 @@ def predict_bullying(text, model, tokenizer, device, threshold=0.7):
     toxic_prob = probabilities[labels.index("toxic")].item()
     non_toxic_prob = probabilities[labels.index("non-toxic")].item()
 
-    # ✅ Correct logic
-    is_bullying = (predicted_label == "toxic") and (toxic_prob > threshold)
+    # ✅ FIXED LOGIC (MAIN CHANGE)
+    if predicted_label == "toxic" and toxic_prob > threshold:
+        is_bullying = True
+        final_label = "BULLYING DETECTED"
+    elif predicted_label == "toxic":
+        is_bullying = True
+        final_label = "POSSIBLY BULLYING"
+    else:
+        is_bullying = False
+        final_label = "SAFE CONTENT"
 
     return {
         'is_bullying': is_bullying,
         'toxic_probability': toxic_prob,
         'non_toxic_probability': non_toxic_prob,
         'confidence': toxic_prob,
-        'label': 'BULLYING DETECTED' if is_bullying else 'SAFE CONTENT'
+        'label': final_label
     }
- 
 
 def create_gauge_chart(confidence, is_bullying):
     """Create a gauge chart showing confidence level."""

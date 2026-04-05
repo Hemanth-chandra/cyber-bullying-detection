@@ -1,285 +1,121 @@
-# 🛡️ Cyber Bullying Detection System
+#  Cyber Bullying Detection System
 
-**Author:** S.Hemanth Chandra  
-**Registration Number:** 2025MS020
-
-A real-time web application for detecting cyber bullying using a pre-trained BERT transformer model.
+**author:** S. Hemanth Chandra
 
 ---
 
-## 🌟 Features
+##  Project Overview
 
-- ✅ Real-time cyber bullying detection
-- 📊 Interactive confidence visualization
-- 🎯 Adjustable confidence threshold
-- 📈 Detailed probability breakdowns
-- 🎨 User-friendly web interface
-- 🚀 Fast predictions using pre-trained BERT
-- 📱 Responsive design
+The **Cyber Bullying Detection System** is a real-time AI-powered web application designed to detect toxic, harmful, and bullying content in text. Built using a fine-tuned **RoBERTa** transformer model and deployed via **Streamlit**, the system provides instant feedback on whether a given piece of text contains cyberbullying or toxic language.
+
+This project addresses the growing problem of online harassment and cyberbullying by leveraging state-of-the-art Natural Language Processing (NLP) to automatically flag harmful content — helping platforms, educators, and individuals moderate digital communication more effectively.
+
+---
+##  Live Demo
+ https://cyber-bullying-detection.streamlit.app/
+##  Objectives
+
+- Detect cyberbullying and toxic language in real-time from user-entered text
+- Provide confidence scores and visual feedback for predictions
+- Deploy an interactive, user-friendly web interface accessible without technical knowledge
+- Use a pre-trained transformer model to achieve high accuracy without training from scratch
 
 ---
 
-## 🚀 Quick Start
+##  Model Details
 
-### Option 1: Run Locally
+| Property | Details |
+|---|---|
+| **Model** | `s-nlp/roberta_toxicity_classifier` |
+| **Base Architecture** | RoBERTa (Robustly Optimized BERT Pretraining Approach) |
+| **Task** | Binary Text Classification (Toxic / Neutral) |
+| **Source** | HuggingFace Model Hub |
+| **Why RoBERTa?** | Outperforms BERT on most NLP benchmarks; better handling of short, informal text like social media messages |
 
-#### Prerequisites
-- Python 3.8 or higher
-- pip package manager
+### Why this model over alternatives?
 
-#### Installation Steps
-
-1. **Install Dependencies**
-```bash
-pip install -r requirements.txt
-```
-
-2. **Run the Application**
-```bash
-streamlit run app.py
-```
-
-3. **Access the App**
-- The app will automatically open in your browser
-- Default URL: `http://localhost:8501`
+| Model | "i hate you" | "you are a pig" | "you are stupid" |
+|---|---|---|---|
+| `unitary/toxic-bert` | ~20% ❌ | ~30% ❌ | ~15% ❌ |
+| `martin-ha/toxic-comment-model` | ~75% ⚠️ | ~78% ✅ | ~80% ✅ |
+| `s-nlp/roberta_toxicity_classifier` | ~95% ✅ | ~92% ✅ | ~90% ✅ |
 
 ---
 
-### Option 2: Deploy on Streamlit Cloud (Recommended for Demos)
+##  Tech Stack
 
-#### Steps:
-
-1. **Create a GitHub Repository**
-   - Go to [GitHub](https://github.com)
-   - Create a new repository (e.g., `cyberbullying-detector`)
-   - Upload these files:
-     - `app.py`
-     - `requirements.txt`
-     - `README.md`
-
-2. **Deploy on Streamlit Cloud**
-   - Go to [share.streamlit.io](https://share.streamlit.io)
-   - Sign in with GitHub
-   - Click "New app"
-   - Select your repository
-   - Main file: `app.py`
-   - Click "Deploy"
-
-3. **Access Your App**
-   - You'll get a public URL like: `https://your-app.streamlit.app`
-   - Share this URL with anyone!
+| Layer | Technology |
+|---|---|
+| **Frontend / UI** | Streamlit |
+| **ML Framework** | HuggingFace Transformers, PyTorch |
+| **Visualization** | Plotly |
+| **Language** | Python 3.8+ |
+| **Model Hosting** | HuggingFace Hub (auto-downloaded) |
 
 ---
 
-### Option 3: Deploy on Hugging Face Spaces
-
-1. **Create a Hugging Face Account**
-   - Go to [huggingface.co](https://huggingface.co)
-   - Sign up for free
-
-2. **Create a New Space**
-   - Click on your profile → "New Space"
-   - Name: `cyberbullying-detector`
-   - SDK: Select "Streamlit"
-   - Click "Create Space"
-
-3. **Upload Files**
-   - Upload `app.py` and `requirements.txt`
-   - The app will auto-deploy
-
-4. **Access Your App**
-   - URL: `https://huggingface.co/spaces/YOUR_USERNAME/cyberbullying-detector`
-
----
-
-### Option 4: Deploy on Render
-
-1. **Create Account**
-   - Go to [render.com](https://render.com)
-   - Sign up for free
-
-2. **Create New Web Service**
-   - Click "New +" → "Web Service"
-   - Connect your GitHub repository
-
-3. **Configure Service**
-   - Name: `cyberbullying-detector`
-   - Environment: Python 3
-   - Build Command: `pip install -r requirements.txt`
-   - Start Command: `streamlit run app.py --server.port=$PORT --server.address=0.0.0.0`
-
-4. **Deploy**
-   - Click "Create Web Service"
-   - Wait for deployment (5-10 minutes)
-
----
-
-## 📖 How to Use
-
-1. **Enter Text**
-   - Type or paste any text in the input box
-   - Or click on example buttons to test
-
-2. **Adjust Settings (Optional)**
-   - Use the sidebar slider to change confidence threshold
-   - Higher threshold = fewer false positives
-   - Default: 0.7 (70%)
-
-3. **Analyze**
-   - Click "Analyze Text" button
-   - View instant results with:
-     - Detection status (Safe/Bullying)
-     - Confidence scores
-     - Probability breakdown
-     - Visual gauge chart
-
-4. **Interpret Results**
-   - ✅ **Green/Safe**: Content is appropriate
-   - ⚠️ **Red/Warning**: Potential cyber bullying detected
-   - 📊 **Scores**: Higher toxicity = more likely to be bullying
-
----
-
-## 🔧 Configuration
-
-### Confidence Threshold
-- **Low (0.5-0.6)**: More sensitive, catches more cases, may have false positives
-- **Medium (0.7)**: Balanced approach (recommended)
-- **High (0.8-0.95)**: Very strict, fewer false positives, may miss some cases
-
-### Model Information
-- **Model**: `unitary/toxic-bert`
-- **Type**: Pre-trained BERT transformer
-- **Training**: Large-scale toxic language datasets
-- **Languages**: Primarily English
-
----
-
-## 📁 Project Structure
-
-```
-cyberbullying-detector/
+##  Project Structure
+cyber-bullying-detection/
 │
-├── app.py                 # Main Streamlit application
-├── requirements.txt       # Python dependencies
-├── README.md             # This file
-└── .gitignore            # Git ignore file (optional)
-```
+├── app.py                  # Main Streamlit application
+├── requirements.txt        # Python dependencies
+├── README.md               # Project documentation
+---
+
+## 🔍 Classification Logic
+
+| Toxic Score | Label |
+|---|---|
+| > 0.50 (threshold) | ⚠️ BULLYING DETECTED |
+| 0.35 – 0.50 | 🔶 POSSIBLY BULLYING |
+| < 0.35 | ✅ SAFE CONTENT |
 
 ---
 
-## 🎯 Use Cases
+## 📸 Sample Output
 
-- **Social Media Platforms**: Automated content moderation
-- **Educational Institutions**: Monitor student communications
-- **Online Communities**: Protect users from harassment
-- **Parental Control**: Monitor children's online interactions
-- **Customer Support**: Flag abusive customer messages
+| Input Text | Result |
+|---|---|
+| "You're so stupid, nobody likes you" | ⚠️ BULLYING DETECTED (91%) |
+| "I hate you, you are a pig" | ⚠️ BULLYING DETECTED (94%) |
+| "Let's study together at the library" | ✅ SAFE CONTENT (4%) |
+| "That's a bit rude honestly" | 🔶 POSSIBLY BULLYING (38%) |
 
 ---
 
 ## ⚠️ Limitations
 
-- Works best with English text
-- May struggle with sarcasm or cultural context
-- Not 100% accurate - human review recommended
-- Context from conversation history not considered
-- Requires internet for first-time model download
+- The model works best with **English text** — accuracy may drop for other languages or transliterated text (e.g., Telugu/Hindi written in English)
+- Very **short or sarcastic** text may occasionally be misclassified
+- This is an AI tool — **human moderation** should always be the final decision maker
+- First run requires internet to **download the model** from HuggingFace
 
 ---
 
-## 🔐 Privacy & Ethics
+## 🔮 Future Improvements
 
-- No data is stored or logged
-- All processing happens in real-time
-- Model runs locally or on your chosen server
-- Always review flagged content manually
-- Use as a support tool, not sole decision-maker
-
----
-
-## 🛠️ Troubleshooting
-
-### Issue: Model download is slow
-**Solution**: First run downloads ~500MB model. Be patient or use faster internet.
-
-### Issue: Out of memory error
-**Solution**: Close other applications or use cloud deployment.
-
-### Issue: Import errors
-**Solution**: Ensure all dependencies are installed:
-```bash
-pip install -r requirements.txt --upgrade
-```
-
-### Issue: Port already in use
-**Solution**: Use a different port:
-```bash
-streamlit run app.py --server.port=8502
-```
+- Add support for **multilingual** text (Hindi, Telugu, etc.)
+- Batch analysis — upload a **CSV file** of comments for bulk detection
+- Add **category-level** detection (threat, insult, hate speech, obscenity)
+- Export analysis **reports as PDF**
+- Deploy on **Streamlit Cloud / Hugging Face Spaces** for public access
 
 ---
 
-## 📚 Technical Details
+## 📚 References
 
-### Model Architecture
-- **Base**: BERT (Bidirectional Encoder Representations from Transformers)
-- **Fine-tuning**: Toxic language classification
-- **Input**: Text sequences up to 512 tokens
-- **Output**: Binary classification (toxic/non-toxic)
-
-### Performance
-- **Processing Time**: < 1 second per text
-- **Accuracy**: ~85-90% on standard benchmarks
-- **Precision**: High (minimizes false positives)
+- [HuggingFace Transformers](https://huggingface.co/docs/transformers)
+- [s-nlp/roberta_toxicity_classifier](https://huggingface.co/s-nlp/roberta_toxicity_classifier)
+- [Streamlit Documentation](https://docs.streamlit.io)
+- [RoBERTa Paper — Liu et al., 2019](https://arxiv.org/abs/1907.11692)
 
 ---
 
-## 🚀 Future Enhancements
+## 👨‍💻 Author
 
-- [ ] Multi-language support
-- [ ] Severity classification (mild/moderate/severe)
-- [ ] Conversation context analysis
-- [ ] User history tracking
-- [ ] Explanation generation for decisions
-- [ ] API endpoint for integration
-- [ ] Mobile app version
+**S. Hemanth Chandra**
+
 
 ---
 
-## 📝 License
-
-This project is created for educational purposes as part of academic coursework.
-
----
-
-## 👨‍💻 Developer
-
-**S.Hemanth Chandra**  
-Registration Number: 2025MS020  
-
-For questions or feedback, please create an issue in the repository.
-
----
-
-## 🙏 Acknowledgments
-
-- **Hugging Face**: For the transformers library
-- **Unitary**: For the pre-trained toxic-bert model
-- **Streamlit**: For the amazing web framework
-- **PyTorch**: For deep learning capabilities
-
----
-
-## 📞 Support
-
-If you encounter any issues:
-
-1. Check the Troubleshooting section
-2. Ensure all dependencies are installed correctly
-3. Verify Python version (3.8+)
-4. Check internet connection (for model download)
-
----
-
-**Built with ❤️ using AI for Social Good**
+*This project was developed for academic purposes as part of a Machine Learning / NLP course.*

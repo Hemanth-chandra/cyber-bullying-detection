@@ -71,20 +71,7 @@ def load_model():
     return model, tokenizer, device
 
 def predict_bullying(text, model, tokenizer, device, threshold=0.7):
-    """
-    Predict if the text contains cyber bullying.
     
-    Args:
-        text: Input text to analyze
-        model: Pre-trained BERT model
-        tokenizer: BERT tokenizer
-        device: Computing device (CPU/GPU)
-        threshold: Confidence threshold for classification
-        
-    Returns:
-        Dictionary with prediction results
-    """
-    # Tokenize input
     inputs = tokenizer(
         text,
         return_tensors="pt",
@@ -93,19 +80,24 @@ def predict_bullying(text, model, tokenizer, device, threshold=0.7):
         padding=True
     ).to(device)
     
-    # Get predictions
     with torch.no_grad():
         outputs = model(**inputs)
         logits = outputs.logits
-    
-    # Calculate probabilities
-    probabilities = torch.nn.functional.softmax(logits, dim=-1)
-    toxic_prob = probabilities[0][1].item()
-    non_toxic_prob = probabilities[0][0].item()
-    
-    # Apply threshold
-    is_bullying = toxic_prob >= threshold
-    
+
+    probabilities = torch.nn.functional.softmax(logits, dim=-1)[0]
+
+    # 🔥 Correct label mapping
+    labels = ["non-toxic", "toxic"]
+
+    predicted_class = torch.argmax(probabilities).item()
+    predicted_label = labels[predicted_class]
+
+    toxic_prob = probabilities[labels.index("toxic")].item()
+    non_toxic_prob = probabilities[labels.index("non-toxic")].item()
+
+    # ✅ Correct logic
+    is_bullying = (predicted_label == "toxic") and (toxic_prob > threshold)
+
     return {
         'is_bullying': is_bullying,
         'toxic_probability': toxic_prob,
@@ -113,6 +105,7 @@ def predict_bullying(text, model, tokenizer, device, threshold=0.7):
         'confidence': toxic_prob,
         'label': 'BULLYING DETECTED' if is_bullying else 'SAFE CONTENT'
     }
+ 
 
 def create_gauge_chart(confidence, is_bullying):
     """Create a gauge chart showing confidence level."""

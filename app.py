@@ -13,7 +13,8 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import plotly.graph_objects as go
 import pandas as pd
 from datetime import datetime
-
+import torch
+torch.set_num_threads(1)
 # Page configuration
 st.set_page_config(
     page_title="Cyber Bullying Detector",

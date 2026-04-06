@@ -1,7 +1,6 @@
 """
 Cyber Bullying Detection Web Application
-Name: S.Hemanth Chandra
-Reg No: 2025MS020
+AUTHOR: S.Hemanth Chandra
 """
 
 import streamlit as st
@@ -99,7 +98,7 @@ def create_gauge_chart(score, is_bullying):
 
 def main():
     st.title("🛡️ Cyber Bullying Detection System")
-    st.markdown("### Real-time AI-powered content moderation using RoBERTa")
+    st.markdown("### Real-time AI-powered content moderation")
     st.markdown("---")
 
     with st.sidebar:
@@ -117,8 +116,8 @@ def main():
         st.info("""
         **Project:** Cyber Bullying Detection
 
-        **Student:** S.Hemanth Chandra
-        **Reg No:** 2025MS020
+        **AUTHOR:** S.Hemanth Chandra
+        
 
         **Model:** s-nlp/roberta_toxicity_classifier
 
@@ -238,8 +237,8 @@ def main():
     st.markdown("---")
     st.markdown("""
     <div style='text-align:center;padding:2rem;color:#666;'>
-        <p><strong>Cyber Bullying Detection System</strong> | Powered by RoBERTa Toxicity Classifier</p>
-        <p>Created by S.Hemanth Chandra (2025MS020)</p>
+        <p><strong>Cyber Bullying Detection System</strong> | Powered by Toxicity Classifier</p>
+        <p>Created by S.Hemanth Chandra </p>
         <p style='font-size:0.8rem;'>Always use human judgment for final moderation decisions.</p>
     </div>""", unsafe_allow_html=True)
 

@@ -119,7 +119,7 @@ def main():
         **AUTHOR:** S.Hemanth Chandra
         
 
-        **Model:** s-nlp/roberta_toxicity_classifier
+        **Model:** toxicity_classifier
 
         Highly sensitive to mild insults, hate
         speech, and toxic language.
